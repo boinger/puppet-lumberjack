@@ -57,9 +57,9 @@ define lumberjack::instance(
   require lumberjack
 
   File {
-    owner => 'root',
-    group => 'root',
-    mode  => '0644'
+    owner => root,
+    group => root,
+    mode  => 0644
   }
 
   if ($run_as_service == true ) {
@@ -86,7 +86,7 @@ define lumberjack::instance(
 
     file { "/etc/init.d/lumberjack-${name}":
       ensure  => $ensure,
-      mode    => '0755',
+      mode    => 0755,
       content => template("${module_name}/etc/init.d/lumberjack.erb"),
       notify  => $notify_lumberjack
     }
@@ -145,22 +145,19 @@ define lumberjack::instance(
     }
 
   } else {
-
     $notify_lumberjack = undef
-
   }
 
-
-  file { "/etc/lumberjack/${name}":
-    ensure => directory,
-  }
+  file {
+    "/etc/lumberjack/${name}":
+      ensure => directory;
 
   # Setup certificate files
-  file { "/etc/lumberjack/${name}/ca.crt":
-    ensure  => $ensure,
-    source  => $ssl_ca_file,
-    require => File[ "/etc/lumberjack/${name}" ],
-    notify  => $notify_lumberjack
+    "/etc/lumberjack/${name}/ca.crt":
+      ensure  => $ensure,
+      source  => $ssl_ca_file,
+      require => File[ "/etc/lumberjack/${name}" ],
+      notify  => $notify_lumberjack
   }
 
 }
