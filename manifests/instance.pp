@@ -149,6 +149,9 @@ define lumberjack::instance(
   }
 
   file {
+    "/etc/lumberjack":
+      ensure => directory;
+
     "/etc/lumberjack/${name}":
       ensure => directory;
 
