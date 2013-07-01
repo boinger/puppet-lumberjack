@@ -51,7 +51,7 @@ define lumberjack::instance(
   $files          = undef,
   $fields         = false,
   $run_as_service = true,
-  $ensure         = $logstash::ensure
+  $ensure         = present
 ) {
 
   require lumberjack
