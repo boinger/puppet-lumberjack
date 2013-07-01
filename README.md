@@ -11,10 +11,10 @@ This module is puppet 3 tested
 Installation, make sure service is running and will be started at boot time:
 
      class { 'lumberjack': 
-       host  => 'logstashhost',
-       port  => '1234',
-       files => ['/var/log/messages', '/var/log/secure'],
-       ssl_ca_path => "puppet:///path/to/ca.crt",
+       host        => 'logstashhost',
+       port        => '1234',
+       files       => ['/var/log/messages', '/var/log/secure'],
+       ssl_ca_file => "puppet:///path/to/ca.crt",
      }
 
 Removal/decommissioning:
