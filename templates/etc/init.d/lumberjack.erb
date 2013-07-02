@@ -14,10 +14,10 @@ end
 
 DAEMON_PATH="/opt/lumberjack/"
 DAEMON="bin/lumberjack.sh"
-DAEMONOPTS="--ssl-ca-path /etc/lumberjack/<%= @instance %>/ca.crt --host <%= @host %> --port <%= @port %> <%= extra_fields %> <%= @logfiles %>"
+DAEMONOPTS="--ssl-ca-path /etc/lumberjack/<%= @name %>/ca.crt --host <%= @host %> --port <%= @port %> <%= extra_fields %> <%= @logfiles %>"
 
-NAME="lumberjack-<%= @instance %>"
-DESC="Lumberjack-<%= @instance %>"
+NAME="lumberjack-<%= @name %>"
+DESC="Lumberjack-<%= @name %>"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
