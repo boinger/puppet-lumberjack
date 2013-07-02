@@ -149,10 +149,14 @@ define lumberjack::instance(
     $notify_lumberjack = undef
   }
 
-  file {
-    "/etc/lumberjack":
-      ensure => directory;
+  if (!defined(File['/etc/lumberjack'])) {
+    file {
+      "/etc/lumberjack":
+        ensure => directory;
+    }
+  }
 
+  file {
     "/etc/lumberjack/${name}":
       ensure => directory;
 
