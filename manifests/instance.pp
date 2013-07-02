@@ -138,10 +138,11 @@ define lumberjack::instance(
     service { "lumberjack-${name}":
       ensure     => $service_ensure,
       enable     => $service_enable,
-      name       => $lumberjack::params::service_name,
+      #name       => $lumberjack::params::service_name,
       hasstatus  => $lumberjack::params::service_hasstatus,
       hasrestart => $lumberjack::params::service_hasrestart,
-      pattern    => $lumberjack::params::service_pattern,
+      #pattern    => $lumberjack::params::service_pattern,
+      pattern    => "lumberjack-${name}";
     }
 
   } else {
