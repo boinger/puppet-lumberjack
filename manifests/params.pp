@@ -41,7 +41,7 @@ class lumberjack::params {
   $status = 'enabled'
 
   # Restart service on change
-  $restart_on_change = false
+  $restart_on_change = true
 
   #### Internal module values
 
