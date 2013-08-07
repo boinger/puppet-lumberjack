@@ -1,0 +1,11 @@
+<%-
+fields = @fields
+if fields
+  extra_fields = fields.collect { |k,v| "--field #{k}=#{v}" }.join(" ")
+else
+  extra_fields = ''
+end
+-%>
+#!/bin/sh
+exec 2>&1
+exec /opt/lumberjack/bin/lumberjack.sh --ssl-ca-path /etc/lumberjack/<%= @name %>/ca.crt --host <%= @host %> --port <%= @port %> <%= extra_fields %> <%= @logfiles %>
