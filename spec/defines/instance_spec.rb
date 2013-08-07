@@ -14,7 +14,7 @@ describe 'lumberjack::instance', :type => 'define' do
       :port           => 1234,
       :files          => [ '/var/log/file1', '/var/log/file2' ],
       :fields         => { 'field1' => 'value1', 'field2' => 'value2' },
-      :run_as_service => true
+      :provider       => "init.d"
     } end
 
     it { should contain_file('/etc/init.d/lumberjack-foo') }
@@ -27,7 +27,7 @@ describe 'lumberjack::instance', :type => 'define' do
 
     let :params do {
       :ssl_ca_file    => 'puppet:///path/to/ca.crt',
-      :run_as_service => false
+      :provider       => "none"
     } end
 
     it { should_not contain_file('/etc/init.d/lumberjack-foo') }

@@ -50,8 +50,8 @@ define lumberjack::instance(
   $port           = undef,
   $files          = undef,
   $fields         = false,
-  $run_as_service = true,
-  $ensure         = present
+  $ensure         = present,
+  $provider       = "init.d",
 ) {
 
   require lumberjack
@@ -62,8 +62,7 @@ define lumberjack::instance(
     mode  => 0644
   }
 
-  if ($run_as_service == true ) {
-
+  if ($provider != false ) {
     # Input validation
     validate_string($host)
 
@@ -77,6 +76,31 @@ define lumberjack::instance(
     if $fields {
       validate_hash($fields)
     }
+  }
+
+  if ($provider == "daemontools" ) {
+
+    file { "/etc/init.d/lumberjack-${name}": ensure => absent; }
+    service { "lumberjack-${name}": ensure => stopped, enable => false; }
+
+    $user = root
+    $loguser = root
+
+    daemontools::setup{
+      "lumberjack/${name}":
+        user    => $user, ## Needed to read some log files.  Sorry.
+        loguser => $loguser,
+        run     => template("${module_name}/run.erb"),
+        logrun  => template("${module_name}/log/run.erb");
+    }
+
+    daemontools::service {
+    "lumberjack-${name}":
+      source  => "/etc/lumberjack/${name}",
+      require => Daemontools::Setup["lumberjack/${name}"];
+    }
+  }
+  elsif ($provider == "init.d" ) {
 
     # Setup init file if running as a service
     $notify_lumberjack = $lumberjack::restart_on_change ? {
@@ -96,7 +120,7 @@ define lumberjack::instance(
     # set params: in operation
     if $lumberjack::ensure == 'present' {
 
-      case $lumberjack::status {
+      case $lumberjack::params::status {
         # make sure service is currently running, start it on boot
         'enabled': {
           $service_ensure = 'running'
