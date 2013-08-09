@@ -91,7 +91,8 @@ define lumberjack::instance(
         user    => $user, ## Needed to read some log files.  Sorry.
         loguser => $loguser,
         run     => template("${module_name}/run.erb"),
-        logrun  => template("${module_name}/log/run.erb");
+        logrun  => template("${module_name}/log/run.erb"),
+        notify  => Daemontools::Service["lumberjack-${name}"];
     }
 
     daemontools::service {
