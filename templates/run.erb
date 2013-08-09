@@ -1,7 +1,7 @@
 <%-
 fields = @fields
 if fields
-  extra_fields = fields.collect { |k,v| "--field #{k}=#{v}" }.join(" ")
+  extra_fields = fields.map { |k,v| "--field " + k + "=" + v }.join(" ")
 else
   extra_fields = ''
 end
