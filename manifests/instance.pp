@@ -85,7 +85,6 @@ define lumberjack::instance(
 
     $user = root
     $loguser = root
-    $extra_fields = ["type=${name}"]
 
     daemontools::setup{
       "lumberjack/${name}":
