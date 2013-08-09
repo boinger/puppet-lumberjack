@@ -49,7 +49,7 @@ define lumberjack::instance(
   $host           = undef,
   $port           = undef,
   $files          = undef,
-  $fields         = false,
+  $fields         = { type => $name },
   $ensure         = present,
   $provider       = "init.d",
 ) {
