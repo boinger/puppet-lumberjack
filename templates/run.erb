@@ -8,4 +8,4 @@ end
 -%>
 #!/bin/sh
 exec 2>&1
-exec /opt/lumberjack/bin/lumberjack.sh --host <%= @host %> --port <%= @port %> --ssl-ca-path /etc/lumberjack/<%= @name %>/ca.crt <%= extra_fields %> <%= @logfiles %>
+exec tail -F <%= @logfiles %> | /opt/lumberjack/bin/lumberjack.sh --host <%= @host %> --port <%= @port %> --ssl-ca-path /etc/lumberjack/<%= @name %>/ca.crt <%= extra_fields %> -
