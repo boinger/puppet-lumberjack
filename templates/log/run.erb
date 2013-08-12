@@ -1,4 +1,12 @@
+<%-
+fields = @fields
+if fields
+  extra_fields = fields.map { |k,v| "--field " + k + "=" + v }.join(" ")
+else
+  extra_fields = ''
+end
+-%>
 #!/bin/sh
-[ -d ./main ] || mkdir ./main
-chown -Rf <%= @loguser %> .
-exec setuidgid <%= @loguser %> multilog t s5000000 ./main
+exec 2>&1
+/opt/lumberjack/bin/lumberjack.sh --host <%= @host %> --port <%= @port %> --ssl-ca-path /etc/lumberjack/<%= @name %>/ca.crt <%= extra_fields %> - > ./main/current
+
