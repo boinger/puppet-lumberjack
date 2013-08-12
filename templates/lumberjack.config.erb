@@ -1,0 +1,52 @@
+<%-
+fields = @fields
+if fields
+  extra_fields = fields.map { |k,v| "--field " + k + "=" + v }.join(" ")
+else
+  extra_fields = ''
+end
+-%>{
+  # The network section covers network configuration :)
+  "network": {
+    # A list of downstream servers listening for our messages.
+    # lumberjack will pick one at random and only switch if
+    # the selected one appears to be dead or unresponsive
+    "servers": [ "<%= @host %>:<%= @port %>" ],
+
+    # The path to your client ssl certificate (optional)
+    #"ssl certificate": "./lumberjack.crt",
+    # The path to your client ssl key (optional)
+    "ssl key": "./lumberjack.key",
+
+    # The path to your trusted ssl CA file. This is used
+    # to authenticate your downstream server.
+    "ssl ca": "./lumberjack_ca.crt"
+  },
+
+  # The list of files configurations
+  "files": [
+    # An array of hashes. Each hash tells what paths to watch and
+    # what fields to annotate on events from those paths.
+    {
+      "paths": [ 
+        # single paths are fine
+        "/var/log/messages",
+        # globs are fine too, they will be periodically evaluated
+        # to see if any new files match the wildcard.
+        "/var/log/*.log"
+      ],
+
+      # A dictionary of fields to annotate on each event.
+      "fields": { "type": "syslog" }
+    }, {
+      # A path of "-" means stdin.
+      "paths": [ "-" ],
+      "fields": { "type": "stdin" }
+    }, {
+      "paths": [
+        "/var/log/apache/httpd-*.log"
+      ],
+      "fields": { "type:" "apache" }
+    }
+  ]
+}
