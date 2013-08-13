@@ -35,7 +35,7 @@ class lumberjack::params {
   $ensure = 'present'
 
   # autoupgrade
-  $autoupgrade = false
+  $autoupgrade = true
 
   # service status
   $status = 'enabled'
