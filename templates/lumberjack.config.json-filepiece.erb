@@ -8,7 +8,7 @@ end
 -%>
     {
       "paths": [ 
-        "<%= @files %>"
+        "<%= @files.join(' ') %>"
       ],
       "fields": { <%= @extra_fields %> }
     }
