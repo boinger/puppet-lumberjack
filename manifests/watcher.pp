@@ -86,8 +86,7 @@ define lumberjack::watcher(
     "/etc/lumberjack/${part_of}/pieces/filepiece-${name}":
       ensure  => $ensure,
       content => template("${module_name}/lumberjack.config.json-filepiece.erb"),
-      require => Lumberjack::Instance["${part_of}"],
-      notify  => $notify_lumberjack;
+      notify  => Lumberjack::Service["${part_of}"];
   }
 
 }
