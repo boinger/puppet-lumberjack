@@ -8,7 +8,7 @@ end
 -%>
     {
       "paths": [ 
-        "<%= @files.join(' ') %>"
+        <%= @files.map {|f| '"' + f + '"'}.join(',') %>
       ],
-      "fields": { <%= @extra_fields %> }
+      "fields": { <%= extra_fields %> }
     }
