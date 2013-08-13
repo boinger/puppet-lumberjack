@@ -48,8 +48,8 @@
 define lumberjack::watcher(
   $part_of,
   $files,
-  $fields         = { type => $name, },
-  $ensure         = present,
+  $fields = { type => $name, },
+  $ensure = present,
 ) {
 
   require lumberjack
