@@ -169,13 +169,11 @@ define lumberjack::instance(
   file {
     "/etc/lumberjack/${name}/pieces/header":
       ensure  => $ensure,
-      mode    => 0644,
       content => template("${module_name}/lumberjack.config.json-headerpiece.erb"),
       notify  => $notify_lumberjack;
 
     "/etc/lumberjack/${name}/pieces/footer":
       ensure  => $ensure,
-      mode    => 0644,
       content => template("${module_name}/lumberjack.config.json-footerpiece.erb"),
       notify  => $notify_lumberjack;
 

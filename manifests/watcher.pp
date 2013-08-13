@@ -85,7 +85,6 @@ define lumberjack::watcher(
   file {
     "/etc/lumberjack/${part_of}/pieces/filepiece-${name}":
       ensure  => $ensure,
-      mode    => 0644,
       content => template("${module_name}/lumberjack.config.json-filepiece.erb"),
       notify  => $notify_lumberjack;
   }
