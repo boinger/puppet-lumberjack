@@ -1,4 +1,3 @@
 #!/bin/sh
 exec 2>&1
-exec tail -F <%= @logfiles %>
-
+exec /opt/lumberjack/bin/lumberjack.sh -config /etc/lumberjack/<%= @name %>/config.json

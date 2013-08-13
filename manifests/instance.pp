@@ -16,24 +16,12 @@
 #   Default value: undef
 #   This variable is optional
 #
-# [*files*]
-#   Array of files you wish to process
-#   Value type is array
-#   Default value: undef
-#   This variable is optional
-#
 # [*ssl_ca_file*]
 #   File to use for the SSL CA
 #   Value type is string
 #   This variable is mandatory
 #
-# [*fields*]
-#   Extra fields to send
-#   Value type is hash
-#   Default value: false
-#   This variable is optional
-#
-# [*run_as_service*]
+# [*provider*]
 #   Set this to true if you want to run this as a service.
 #   Set to false if you only want to manage the ssl_ca_file
 #   Value type is boolean
@@ -43,14 +31,12 @@
 # === Authors
 #
 # * Richard Pijnenburg <mailto:richard@ispavailability.com>
+# * Modified by Jeff Vier <mailto:jeff@jeffvier.com>
 #
 define lumberjack::instance(
   $ssl_ca_file,
   $host           = undef,
   $port           = undef,
-  $files          = undef,
-  $fields         = { type => $name },
-  $ensure         = present,
   $provider       = "init.d",
 ) {
 
@@ -68,13 +54,6 @@ define lumberjack::instance(
 
     if ! is_numeric($port) {
       fail("\"${port}\" is not a valid port parameter value")
-    }
-
-    validate_array($files)
-    $logfiles = join($files,' ')
-
-    if $fields {
-      validate_hash($fields)
     }
   }
 
@@ -167,30 +146,43 @@ define lumberjack::instance(
       hasrestart => $lumberjack::params::service_hasrestart,
       #pattern    => $lumberjack::params::service_pattern,
       pattern    => "lumberjack-${name}",
-      require    => File["/etc/lumberjack/${name}"];
+      require    => File["/etc/lumberjack"];
     }
 
   } else {
     $notify_lumberjack = undef
   }
 
-  if (!defined(File['/etc/lumberjack'])) {
+  if (!defined(File["/etc/lumberjack"])) {
     file {
       "/etc/lumberjack":
         ensure => directory;
     }
   }
+  if (!defined(File["/etc/lumberjack/${name}"])) {
+    file {
+      "/etc/lumberjack/${name}":
+        ensure => directory;
+    }
+  }
 
   file {
-    "/etc/lumberjack/${name}":
-      ensure => directory;
+    "/etc/lumberjack/${name}/pieces/header":
+      ensure  => $ensure,
+      mode    => 0644,
+      content => template("${module_name}/lumberjack.config.json-headerpiece.erb"),
+      notify  => $notify_lumberjack;
 
-  # Setup certificate files
+    "/etc/lumberjack/${name}/pieces/footer":
+      ensure  => $ensure,
+      mode    => 0644,
+      content => template("${module_name}/lumberjack.config.json-footerpiece.erb"),
+      notify  => $notify_lumberjack;
+
     "/etc/lumberjack/${name}/ca.crt":
       ensure  => $ensure,
       source  => $ssl_ca_file,
-      require => File[ "/etc/lumberjack/${name}" ],
-      notify  => $notify_lumberjack
+      notify  => $notify_lumberjack;
   }
 
 }
