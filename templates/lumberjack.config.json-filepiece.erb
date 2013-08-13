@@ -1,14 +1,14 @@
 <%-
 fields = @fields
 if fields
-  extra_fields = fields.map { |k,v| "\"" + k + "\": \"" + v +"\""}.join(", ")
+  extra_fields = fields.map { |k,v| '"' + k + '": "' + v + '"'}.join(",")
 else
   extra_fields = ''
 end
 -%>
     {
       "paths": [ 
-        "<%= @files %>",
+        "<%= @files %>"
       ],
       "fields": { <%= @extra_fields %> }
     }
