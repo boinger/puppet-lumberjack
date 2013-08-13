@@ -97,6 +97,7 @@ class lumberjack(
   $autoupgrade       = $lumberjack::params::autoupgrade,
   $status            = $lumberjack::params::status,
   $restart_on_change = $lumberjack::params::restart_on_change,
+  $provider          = $lumberjack::params::provider,
   $version           = false,
 ) inherits lumberjack::params {
 
