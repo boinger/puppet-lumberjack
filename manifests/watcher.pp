@@ -47,8 +47,8 @@
 #
 define lumberjack::watcher(
   $part_of,
-  $files          = undef,
-  $fields         = { type => $name },
+  $files,
+  $fields         = { type => $name, },
   $ensure         = present,
 ) {
 
