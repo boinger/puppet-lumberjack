@@ -8,24 +8,33 @@ This module is puppet 3 tested
 
 ## Usage
 
-Installation, make sure service is running and will be started at boot time:
+### Set up a parent instance.  This sets up the "framework" config to add individual file/file-group watchers that can be tagged with individual fields.
 
-     class { 'lumberjack': 
-       host        => 'logstashhost',
-       port        => '1234',
-       files       => ['/var/log/messages', '/var/log/secure'],
-       ssl_ca_file => "puppet:///path/to/ca.crt",
-     }
+    lumberjack::instance{
+      'core':
+        host        => 'logstash.blah.com',
+        port        => '5005',
+        ssl_ca_file => 'puppet:///modules/conf/etc/ssl/certs/ca.crt',
+        provider    => 'daemontools';
+    }
 
-Removal/decommissioning:
+### Add watchers that plug in to the intance you set up.
+    lumberjack::watcher {
+      'syslog':
+        part_of => 'core',
+        files => ["/var/log/secure", "/var/log/messages", "/var/log/*.log", ];
+
+      'statsd':
+        part_of => 'core',
+        files => ["/data/log/statsd/statsd.log", ];
+
+      'diamond':
+        part_of => 'core',
+        files => ["/data/log/diamond/diamond.log", ];
+    }
+
+### Removal/decommissioning:
 
      class { 'lumberjack':
        ensure => 'absent',
      }
-
-Install everything but disable service(s) afterwards:
-
-     class { 'lumberjack':
-       status => 'disabled',
-     }
-
