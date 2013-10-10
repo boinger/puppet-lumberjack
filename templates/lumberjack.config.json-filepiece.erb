@@ -1,14 +1,24 @@
 <%-
-fields = @fields
-if fields
-  extra_fields = fields.map { |k,v| '"' + k + '": "' + v + '"'}.join(",")
-else
-  extra_fields = ''
+@fields ||= {'lumberjack_filepiece_default_key' => 'default_value'}
+
+if @fields.length < 1
+  @fields = {'lumberjack_filepiece_default_key' => 'default_value'}
 end
+
+role = @fields['role']
+if role
+  if role.is_a? Array
+    @fields['role'] = role.join(' ')
+  end
+end
+
+data = {
+  "paths" => @files,
+  "fields": extra_fields
+}
+
+data_string = JSON.pretty_generate(data)
+
 -%>
-    {
-      "paths": [ 
-        <%= @files.map {|f| '"' + f + '"'}.join(',') %>
-      ],
-      "fields": { <%= extra_fields %> }
-    }
+<%= data_string %>
+
