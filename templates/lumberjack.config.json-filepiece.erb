@@ -2,11 +2,9 @@
 fields = @fields
 
 if fields
-  role = fields['role']
-  if role
-    if role.is_a? Array
-      fields['role'] == role.join(' ')
-    end
+  fields.each_pair do |k,v|
+    if v.is_a? Array
+    fields[k] = v.join(' ')
   end
 
   extra_fields = fields.map { |k,v| '"' + k + '": "' + v + '"'}.join(",")
