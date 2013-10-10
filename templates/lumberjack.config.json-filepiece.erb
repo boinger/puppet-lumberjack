@@ -12,7 +12,7 @@ if role
   end
 end
 
-data = {"paths" => @files, "fields" => extra_fields}
+data = {"paths" => @files, "fields" => @fields}
 data_string = JSON.pretty_generate(data)
 
 -%>
