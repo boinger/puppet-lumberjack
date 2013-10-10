@@ -3,8 +3,7 @@ fields = @fields
 
 if fields
   fields.each_pair do |k,v|
-    if v.is_a? Array
-    fields[k] = v.join(' ')
+    fields[k] = v.join(' ') if v.is_a? Array
   end
 
   extra_fields = fields.map { |k,v| '"' + k + '": "' + v + '"'}.join(",")
