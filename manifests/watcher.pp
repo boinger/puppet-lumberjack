@@ -48,7 +48,7 @@
 define lumberjack::watcher(
   $part_of,
   $files,
-  $fields = { type => $name, },
+  $fields = { watcher => $name, },
   $ensure = present,
 ) {
 
@@ -64,8 +64,8 @@ define lumberjack::watcher(
   $logfiles = join($files,' ')
 
   validate_hash($fields)
-  if ! $fields['type'] {
-    $fields['type'] = $name
+  if ! $fields['watcher'] {
+    $fields['watcher'] = $name
   }
 
   if (!defined(File["/etc/lumberjack/${part_of}"])) {
