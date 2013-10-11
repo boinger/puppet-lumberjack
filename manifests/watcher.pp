@@ -60,13 +60,12 @@ define lumberjack::watcher(
     mode  => 0644
   }
 
-  if ($provider == present ) {
-    validate_array($files)
-    $logfiles = join($files,' ')
+  validate_array($files)
+  $logfiles = join($files,' ')
 
-    if $fields {
-      validate_hash($fields)
-    }
+  validate_hash($fields)
+  if ! $fields['type'] {
+    $fields['type'] = $name
   }
 
   if (!defined(File["/etc/lumberjack/${part_of}"])) {
