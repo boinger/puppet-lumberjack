@@ -74,9 +74,9 @@ define lumberjack::service(
       }
 
       daemontools::service {
-      "lumberjack-${name}":
-        source  => "/etc/lumberjack/${name}",
-        require => Daemontools::Setup["lumberjack/${name}"];
+        "lumberjack-${name}":
+          source  => "/etc/lumberjack/${name}",
+          require => Daemontools::Setup["lumberjack/${name}"];
       }
     }
     elsif ($provider == "init.d" ) {
