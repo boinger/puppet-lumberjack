@@ -1,6 +1,7 @@
 <%-
-fields = @fields.sort
+fields = @fields
 if fields
+  fileds.sort
   extra_fields = fields.map { |k,v| "--field " + k + "=" + v }.join(" ")
 else
   extra_fields = ''
