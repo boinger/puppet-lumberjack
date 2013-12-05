@@ -1,6 +1,13 @@
+<%-
+hl = []
+@hosts.each do |h|
+  hl.push "\"#{h}:#{@port}\""
+end
+host_list = hl.join(',')
+-%>
 {
   "network": {
-    "servers": [ "<%= @host %>:<%= @port %>" ],
+    "servers": [<%= host_list %>],
     "ssl ca": "/etc/lumberjack/<%= @name %>/ca.crt"
   },
   "files": [

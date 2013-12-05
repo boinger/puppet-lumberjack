@@ -52,8 +52,8 @@
 #   String to set the specific version you want to install.
 #   Defaults to <tt>false</tt>.
 #
-# [*host*]
-#   Hostname to connect to
+# [*hosts*]
+#   Array of Hostnames to connect to
 #
 # [*port*]
 #   Port to connect to

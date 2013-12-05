@@ -12,7 +12,7 @@ This module is puppet 3 tested
 
     lumberjack::instance{
       'core':
-        host        => 'logstash.blah.com',
+        hosts       => ['logstash.blah.com'],
         port        => '5005',
         ssl_ca_file => 'puppet:///modules/conf/etc/ssl/certs/ca.crt',
         provider    => 'daemontools';

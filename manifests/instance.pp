@@ -4,11 +4,9 @@
 #
 # === Parameters
 #
-# [*host*]
-#   Host name or IP address of the Logstash instance to connect to
-#   Value type is string
-#   Default value: undef
-#   This variable is optional
+# [*hosts*]
+#   Host names or IP addresses of the Logstash instances to connect to
+#   Value type is array
 #
 # [*port*]
 #   Port number of the Logstash instance to connect to
@@ -35,7 +33,7 @@
 #
 define lumberjack::instance(
   $ssl_ca_file,
-  $host           = undef,
+  $hosts,
   $port           = undef,
   $provider       = "daemontools",
 ) {
@@ -52,7 +50,7 @@ define lumberjack::instance(
     lumberjack::service{
       $name:
         ssl_ca_file => $ssl_ca_file,
-        host        => $host,
+        hosts        => $hosts,
         port        => $port,
         provider    => $provider;
     }

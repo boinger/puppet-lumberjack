@@ -4,11 +4,9 @@
 #
 # === Parameters
 #
-# [*host*]
-#   Host name or IP address of the Logstash instance to connect to
-#   Value type is string
-#   Default value: undef
-#   This variable is optional
+# [*hosts*]
+#   Host names or IP addresses of the Logstash instances to connect to
+#   Value type is Array
 #
 # [*port*]
 #   Port number of the Logstash instance to connect to
@@ -35,7 +33,7 @@
 #
 define lumberjack::service(
   $ssl_ca_file,
-  $host           = undef,
+  $hosts,
   $port           = undef,
   $provider       = "daemontools",
 ) {
@@ -50,7 +48,7 @@ define lumberjack::service(
 
   if ($provider != false ) {
     # Input validation
-    validate_string($host)
+    validate_array($hosts)
 
     if ! is_numeric($port) {
       fail("\"${port}\" is not a valid port parameter value")

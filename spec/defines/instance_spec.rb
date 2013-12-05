@@ -10,7 +10,7 @@ describe 'lumberjack::instance', :type => 'define' do
 
     let :params do {
       :ssl_ca_file    => 'puppet:///path/to/ca.crt',
-      :host           => 'localhost',
+      :hosts          => ['localhost'],
       :port           => 1234,
       :files          => [ '/var/log/file1', '/var/log/file2' ],
       :fields         => { 'field1' => 'value1', 'field2' => 'value2' },

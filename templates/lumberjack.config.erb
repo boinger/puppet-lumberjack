@@ -5,13 +5,19 @@ if fields
 else
   extra_fields = ''
 end
+
+hl = []
+@hosts.each do |h|
+  hl.push "\"#{h}:#{@port}\""
+end
+host_list = hl.join(',')
 -%>{
   # The network section covers network configuration :)
   "network": {
     # A list of downstream servers listening for our messages.
     # lumberjack will pick one at random and only switch if
     # the selected one appears to be dead or unresponsive
-    "servers": [ "<%= @host %>:<%= @port %>" ],
+    "servers": [<%= host_list %>],
 
     # The path to your client ssl certificate (optional)
     #"ssl certificate": "./lumberjack.crt",
@@ -28,7 +34,7 @@ end
     # An array of hashes. Each hash tells what paths to watch and
     # what fields to annotate on events from those paths.
     {
-      "paths": [ 
+      "paths": [
         # single paths are fine
         "/var/log/messages",
         # globs are fine too, they will be periodically evaluated

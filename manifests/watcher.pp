@@ -4,11 +4,9 @@
 #
 # === Parameters
 #
-# [*host*]
-#   Host name or IP address of the Logstash instance to connect to
-#   Value type is string
-#   Default value: undef
-#   This variable is optional
+# [*hosts*]
+#   Host names or IP addresses of the Logstash instances to connect to
+#   Value type is Array
 #
 # [*port*]
 #   Port number of the Logstash instance to connect to
