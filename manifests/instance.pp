@@ -50,7 +50,7 @@ define lumberjack::instance(
     lumberjack::service{
       $name:
         ssl_ca_file => $ssl_ca_file,
-        hosts        => $hosts,
+        hosts       => $hosts,
         port        => $port,
         provider    => $provider;
     }
