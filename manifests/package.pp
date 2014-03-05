@@ -24,8 +24,6 @@
 #
 class lumberjack::package {
 
-  #### Package management
-
   # set params: in operation
   if $lumberjack::ensure == 'present' {
 

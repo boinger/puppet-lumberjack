@@ -136,12 +136,11 @@ define lumberjack::service(
       }
 
       # action
-      service { "lumberjack-${name}":
+      service { $lumberjack::params::service_name:
         ensure     => $service_ensure,
         enable     => $service_enable,
         hasstatus  => $lumberjack::params::service_hasstatus,
         hasrestart => $lumberjack::params::service_hasrestart,
-        #pattern    => $lumberjack::params::service_pattern,
         pattern    => "lumberjack-${name}",
         require    => File["/etc/lumberjack"];
       }
