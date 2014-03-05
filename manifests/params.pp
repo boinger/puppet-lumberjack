@@ -28,39 +28,24 @@
 # * Richard Pijnenburg <mailto:richard@ispavailability.com>
 #
 class lumberjack::params {
-
-  #### Default values for the parameters of the main module class, init.pp
-
-  # ensure
   $ensure = 'present'
-
-  # autoupgrade
   $autoupgrade = true
-
-  # service status
   $status = 'enabled'
-
-  # Restart service on change
   $restart_on_change = true
-
   $provider = 'daemontools'
-
-  #### Internal module values
 
   # packages
   case $::operatingsystem {
     'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'Amazon', 'RedHat': {
-      # main application
-      $package = [ 'lumberjack' ]
-    }
+      $package = [ 'logstash-forwarder' ]
+      }
     'Debian', 'Ubuntu': {
-      # main application
-      $package = [ 'lumberjack' ]
-    }
+      $package = [ 'logstash-forwarder' ]
+      }
     default: {
       fail("\"${module_name}\" provides no package default value
             for \"${::operatingsystem}\"")
-    }
+      }
   }
 
   # service parameters
@@ -78,8 +63,7 @@ class lumberjack::params {
       $service_pattern    = $service_name
     }
     default: {
-      fail("\"${module_name}\" provides no service parameters
-            for \"${::operatingsystem}\"")
+      fail("\"${module_name}\" doesn't know about OS \"${::operatingsystem}\"")
     }
   }
 
