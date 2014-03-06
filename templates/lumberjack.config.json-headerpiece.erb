@@ -8,6 +8,7 @@ host_list = hl.join(',')
 {
   "network": {
     "servers": [<%= host_list %>],
-    "ssl ca": "/etc/lumberjack/<%= @name %>/ca.crt"
+    "ssl ca": "/etc/lumberjack/<%= @name %>/ca.crt",
+    "timeout": 15
   },
   "files": [
