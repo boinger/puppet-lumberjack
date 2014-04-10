@@ -63,7 +63,8 @@ define lumberjack::watcher(
 
   validate_hash($fields)
   if ! $fields['watcher'] {
-    $fields['watcher'] = $name
+    $tmp_fields = {'watcher' => $name}
+    $fields = merge($fields, $tmp_fields)
   }
 
   if (!defined(File["/etc/lumberjack/${part_of}"])) {
