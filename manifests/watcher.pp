@@ -46,7 +46,7 @@
 define lumberjack::watcher(
   $part_of,
   $files,
-  $fields1 = { watcher => $name, },
+  $fields = { watcher => $name, },
   $ensure = present,
 ) {
 
@@ -62,9 +62,10 @@ define lumberjack::watcher(
   $logfiles = join($files,' ')
 
   validate_hash($fields1)
-  if ! $fields1['watcher'] {
+  if ! $fields['watcher'] {
+    # Puppet has decided to Deprecate Data Structure Mutation https://tickets.puppetlabs.com/browse/PUP-864
     $tmp_fields = {'watcher' => $name}
-    $fields = merge($fields1, $tmp_fields)
+    $fieldsss = merge($fields, $tmp_fields)
   }
 
   if (!defined(File["/etc/lumberjack/${part_of}"])) {
