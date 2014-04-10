@@ -62,7 +62,9 @@ define lumberjack::watcher(
   $logfiles = join($files,' ')
 
   validate_hash($fields)
-  if ! $fields['watcher'] {
+  if $fields['watcher'] {
+    $fieldsss = $fields
+  } else {
     # Puppet has decided to Deprecate Data Structure Mutation https://tickets.puppetlabs.com/browse/PUP-864
     $tmp_fields = {'watcher' => $name}
     $fieldsss = merge($fields, $tmp_fields)
