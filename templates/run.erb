@@ -6,3 +6,4 @@ for x in filepiece-*; do cat $x ; echo ','; done | head -n-1 >> ../config.json
 cat footer >> ../config.json
 
 exec /opt/logstash-forwarder/bin/logstash-forwarder.sh -config /etc/lumberjack/<%= @name %>/config.json
+
