@@ -35,6 +35,7 @@ define lumberjack::instance(
   $ssl_ca_file,
   $hosts,
   $port           = undef,
+  $runtime_opts   = '',
   $provider       = "daemontools",
 ) {
 
@@ -49,10 +50,11 @@ define lumberjack::instance(
   if ($provider != false ) {
     lumberjack::service{
       $name:
-        ssl_ca_file => $ssl_ca_file,
-        hosts       => $hosts,
-        port        => $port,
-        provider    => $provider;
+        ssl_ca_file  => $ssl_ca_file,
+        hosts        => $hosts,
+        port         => $port,
+        runtime_opts => $runtime_opts,
+        provider     => $provider;
     }
   }
 

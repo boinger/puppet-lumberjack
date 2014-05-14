@@ -35,6 +35,7 @@ define lumberjack::service(
   $ssl_ca_file,
   $hosts,
   $port           = undef,
+  $runtime_opts   = '',
   $provider       = "daemontools",
 ) {
 
